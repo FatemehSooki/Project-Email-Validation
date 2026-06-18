@@ -3,6 +3,7 @@
 A custom-built **Email Validation System** using vanilla JavaScript, focused on understanding **input validation, regex patterns, and basic security checks**.
 
 This project was created as a learning exercise to manually implement email validation logic without relying on external validators or tools, in order to strengthen my understanding of how validation works under the hood.
+
 <img src="Screenshot (1015).png">
 ---
 
