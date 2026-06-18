@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Email Validation</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">ّ
+ <style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+  *,
+  *::before,
+  *::after {
+   padding: 0;
+   margin: 0;
+   box-sizing: border-box;
+  }
+
+  body {
+   min-height: 100vh;
+   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-family: 'Inter', sans-serif;
+   overflow: hidden;
+  }
+
+  .form {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 16px;
+   width: 100%;
+   max-width: 400px;
+   padding: 40px;
+   background: rgba(255, 255, 255, 0.95);
+   border-radius: 20px;
+   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+  }
+
+  .form h2 {
+   color: #1a1a2e;
+   font-size: 24px;
+   font-weight: 600;
+   margin-bottom: 8px;
+  }
+
+  .form p {
+   color: #6b7280;
+   font-size: 14px;
+   margin-bottom: 16px;
+  }
+
+  .input-wrapper {
+   width: 100%;
+   position: relative;
+  }
+
+  input {
+   width: 100%;
+   height: 52px;
+   padding: 0 20px;
+   font-size: 15px;
+   font-family: 'Inter', sans-serif;
+   color: #1a1a2e;
+   background: #f9fafb;
+   border: 2px solid #e5e7eb;
+   border-radius: 12px;
+   outline: none;
+   transition: all 0.3s ease;
+  }
+
+  input::placeholder {
+   color: #9ca3af;
+  }
+
+  input:focus {
+   border-color: #6366f1;
+   background: #ffffff;
+   box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+  }
+
+  /* Error Animation Class */
+  .error {
+   border-color: #ef4444 !important;
+   background: #fef2f2 !important;
+   animation: shake 0.5s ease-in-out;
+  }
+
+  .right {
+   border-color: #105f00 !important;
+   background: #fef2f2 !important;
+  }
+
+  @keyframes shake {
+
+   0%,
+   100% {
+    transform: translateX(0);
+   }
+
+   10%,
+   30%,
+   50%,
+   70%,
+   90% {
+    transform: translateX(-6px);
+   }
+
+   20%,
+   40%,
+   60%,
+   80% {
+    transform: translateX(6px);
+   }
+  }
+
+  span {
+   width: 100%;
+   color: #ef4444;
+   font-size: 13px;
+   font-weight: 500;
+   text-align: left;
+   padding: 0 4px;
+   display: none;
+  }
+
+  button {
+   width: 100%;
+   height: 52px;
+   padding: 0 24px;
+   font-size: 15px;
+   font-family: 'Inter', sans-serif;
+   font-weight: 600;
+   color: #ffffff;
+   background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+   border: none;
+   border-radius: 12px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+  }
+
+  button:hover {
+   transform: translateY(-2px);
+   box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+  }
+
+  button:active {
+   transform: translateY(0);
+  }
+
+
+
+  .developer {
+   position: absolute;
+   right: 40px;
+   bottom: 35px;
+   z-index: 999;
+  }
+
+  .developer-card {
+
+   width: 170px;
+   height: 170px;
+
+   position: relative;
+
+   display: flex;
+   justify-content: center;
+   align-items: center;
+  }
+
+  /* Glow */
+
+  .glow {
+
+   position: absolute;
+   inset: 0;
+
+   border-radius: 50%;
+
+   background: rgba(99, 102, 241, .18);
+
+   filter: blur(35px);
+
+   transition: .6s;
+  }
+
+  /* Orbit */
+
+  .orbit {
+
+   position: absolute;
+
+   inset: 0;
+
+   border-radius: 50%;
+
+   border: 1px solid rgba(99, 102, 241, .25);
+
+   transition: .5s;
+  }
+
+  /* Profile */
+
+  .profile {
+
+   width: 110px;
+   height: 110px;
+
+   border-radius: 50%;
+
+   overflow: hidden;
+
+   border: 3px solid #6366f1;
+
+   box-shadow:
+    0 0 20px rgba(99, 102, 241, .4);
+
+   transition: .5s;
+
+   z-index: 5;
+  }
+
+  .profile img {
+
+   width: 100%;
+   height: 100%;
+
+   object-fit: cover;
+
+   transition: .5s;
+  }
+
+  /* Social Icons */
+
+  .orbit a {
+
+   width: 42px;
+   height: 42px;
+
+   border-radius: 50%;
+
+   position: absolute;
+
+   display: flex;
+   justify-content: center;
+   align-items: center;
+
+   background: rgba(20, 20, 40, .95);
+
+   backdrop-filter: blur(15px);
+
+   border: 1px solid rgba(255, 255, 255, .12);
+
+   color: white;
+
+   font-size: 20px;
+
+   text-decoration: none;
+
+   opacity: 0;
+
+   transform: scale(.2);
+
+   transition: .45s;
+  }
+
+  .github {
+
+   top: -20px;
+   left: 50%;
+
+   transform: translateX(-50%) scale(.2);
+  }
+
+  .linkedin {
+
+   right: -20px;
+   top: 50%;
+
+   transform: translateY(-50%) scale(.2);
+  }
+
+  .instagram {
+
+   left: 50%;
+   bottom: -20px;
+
+   transform: translateX(-50%) scale(.2);
+  }
+
+  .github:hover {
+
+   color: #a5b4fc;
+  }
+
+  .linkedin:hover {
+
+   color: #38bdf8;
+  }
+
+  .instagram:hover {
+
+   color: #ec4899;
+  }
+
+
+  .developer-text {
+
+   position: absolute;
+
+   top: -40px;
+
+   text-align: center;
+
+   opacity: 0;
+
+   transform: translateY(10px);
+
+   transition: .4s;
+  }
+
+  .developer-text span {
+
+   color: #a5b4fc;
+
+   text-transform: uppercase;
+
+   letter-spacing: 4px;
+
+   font-size: 10px;
+  }
+
+  .developer-text h3 {
+
+   margin-top: 6px;
+
+   color: white;
+
+   font-size: 16px;
+
+   font-weight: 600;
+
+   white-space: nowrap;
+  }
+
+
+  .developer-card:hover .orbit {
+   animation: orbitRotate 8s linear infinite;
+  }
+
+  .developer-card:hover .profile {
+   transform: scale(1.12);
+  }
+
+  .developer-card:hover .profile img {
+   transform: scale(1.08);
+  }
+
+  .developer-card:hover .glow {
+   transform: scale(1.3);
+   background: rgba(99, 102, 241, .3);
+  }
+
+  .developer-card:hover .orbit a {
+   opacity: 1;
+  }
+
+  .developer-card:hover .github {
+   transform: translateX(-50%) scale(1);
+  }
+
+  .developer-card:hover .linkedin {
+   transform: translateY(-50%) scale(1);
+  }
+
+  .developer-card:hover .instagram {
+   transform: translateX(-50%) scale(1);
+  }
+
+  .developer-card:hover .developer-text {
+   opacity: 1;
+   transform: translateY(0);
+  }
+
+
+  @keyframes orbitRotate {
+
+   from {
+
+    transform: rotate(0deg);
+   }
+
+   to {
+
+    transform: rotate(360deg);
+   }
+  }
+ </style>
+</head>
+
+<body>
+ <div class="form">
+  <h2>Welcome Back</h2>
+  <p>Enter your email to continue</p>
+  <div class="input-wrapper">
+   <input type="text" placeholder="Enter your Email">
+  </div>
+  <span>Your Email is incorrect!</span>
+  <button>Submit</button>
+ </div>
+
+
+ <footer class="developer">
+
+  <div class="developer-card">
+
+   <div class="glow"></div>
+
+   <div class="orbit">
+
+    <a href="https://github.com/FatemehSooki" target="_blank" class="github">
+     <i class="bi bi-github"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/fatemeh-sooki-197060396" target="_blank" class="linkedin">
+     <i class="bi bi-linkedin"></i>
+    </a>
+
+    <a href="https://www.instagram.com/fatemeh_sooki" target="_blank" class="instagram">
+     <i class="bi bi-instagram"></i>
+    </a>
+
+   </div>
+
+   <div class="developer-text">
+
+    <span>Developed By</span>
+
+    <h3>Fatemeh Sooki</h3>
+
+   </div>
+
+   <div class="profile">
+
+    <img src="5823194412169760388.jpg" alt="Developer">
+
+   </div>
+
+
+  </div>
+
+ </footer>
+
+</body>
+<script>
+ let inp = document.querySelector('input')
+ let _error = document.querySelector('span')
+ let btn = document.querySelector('button')
+ btn.addEventListener('click', () => {
+  _error.style.display = 'none'
+  inp.classList.remove('error')
+  inp.classList.remove('right')
+
+  let temp = inp.value
+  if (
+   (temp.search(/<script/i) >= 0) ||
+   (temp.search(/&gt;script/i) >= 0) ||
+   (temp.length == 0)
+  ) {
+   _error.style.display = 'block'
+   inp.classList.add('error')
+  } else {
+   let x = temp.match(/@/g)
+   if (x && x.length == 1) {
+    console.log('good to go');
+    inp.classList.add('right')
+    if (temp.search(/[@]/) > 2) {
+     console.log('good to go');
+     inp.classList.add('right')
+    } else {
+     _error.style.display = 'block'
+     inp.classList.add('error')
+    }
+   } else {
+    _error.style.display = 'block'
+    inp.classList.add('error')
+   }
+  }
+
+  if (temp.search(/[!#$%^&*()+=]/) >= 0) {
+   _error.style.display = 'block'
+   inp.classList.remove('right')
+   inp.classList.add('error')
+  }
+  if (temp.search(/[ا-ی]/) >= 0) {
+   _error.style.display = 'block'
+   inp.classList.remove('right')
+   inp.classList.add('error')
+  }
+ })
+</script>
+
+</html>
